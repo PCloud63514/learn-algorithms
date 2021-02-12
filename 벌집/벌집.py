@@ -1,3 +1,6 @@
+"""
+no: 2292
+"""
 import sys
 number =  int(sys.stdin.readline().rstrip())
 n = 0
