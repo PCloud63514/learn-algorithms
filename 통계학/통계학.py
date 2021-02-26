@@ -2,24 +2,30 @@ import sys
 import math
 n = int(sys.stdin.readline())
 
-list = list()
+inputList = list()
 for _ in range(0, n):
-    list.append(int(sys.stdin.readline()))
+    inputList.append(int(sys.stdin.readline()))
 
-print(int(sum(list) / n))
+print(round(sum(inputList) / n))
 
-listCopy = list.copy()
+listCopy = inputList.copy()
 listCopy.sort()
 print(listCopy[math.trunc(len(listCopy) / 2)])
 count = {}
-for num in list:
+for num in inputList:
     try: count[num] += 1
     except: count[num] = 1
 
-seq = 0
+freqKey = list()
 maxValue = max(count.values())
-for i in count:
-    if(maxValue == i)
+for _key, _value in zip(count.keys(), count.values()):
+    if maxValue == _value:
+        freqKey.append(_key)
 
-print(list.index(max(count)))
-print(max(list) - min(list))
+freqKey.sort(reverse=True)
+
+if len(freqKey) > 1:
+    freqKey.pop((freqKey.index(min(freqKey))))
+print(min(freqKey))
+
+print(max(inputList) - min(inputList))
