@@ -1,8 +1,10 @@
 fun main() {
-    var list:List<String> = "ABCD".split("").toList()
+    val regex = """\W+""".toRegex()
+
+    val list : List<String> = regex.split("abc abc abc abc")
 
     list.forEach {
-        println("@" + it)
+        println(it)
     }
     // for(i in 1..list.size) {
     //     var mutableList:MutableList<List<String>> = mutableListOf<List<String>>()
