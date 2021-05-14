@@ -2,6 +2,8 @@
 
 // WX 랑 XW 안합쳐짐
 fun main() {
+
+    println("BCA")
     var list : Array<String> = arrayOf("XYZ", "XWY", "WXA")
     var course = arrayListOf(2, 3, 4)
     var answer:ArrayList<String> = ArrayList<String>()
@@ -14,15 +16,13 @@ fun main() {
             
             // 중첩 계산 함
             mutableList.forEach { key ->
-                if(countMap.get(key) == null) {
-                    countMap.set(key, 1)
+                var sortKey = key.toSortedSet().toString().replace("\\W+".toRegex(), "")
+                if(countMap.get(sortKey) == null) {
+                    countMap.set(sortKey, 1)
                 } else {
-                    countMap.set(key, countMap.get(key)!! + 1)
+                    countMap.set(sortKey, countMap.get(sortKey)!! + 1)
                 }
             }
-        }
-        countMap.forEach {
-            println("key:" + it.key + "| value:" + it.value)
         }
 
         // 이 중 가장 중첩이 많이 된 녀석의 key를 answer에 추가함
