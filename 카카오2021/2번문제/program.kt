@@ -1,6 +1,3 @@
-// countMap.toList().sortedWith(compareBy({it.second})).toMap() 정렬 코드
-
-// WX 랑 XW 안합쳐짐
 fun main() {
 
     println("BCA")
