@@ -1,13 +1,16 @@
 import kotlin.system.*
 
 fun main() {
-    var info:Array<String> = arrayOf<String>("java backend junior pizza 150","python frontend senior chicken 210","python frontend senior chicken 150","cpp backend senior pizza 260","java backend junior chicken 80","python backend senior chicken 50")
-    var query:Array<String> = arrayOf<String>("java and backend and junior and pizza 100","python and frontend and senior and chicken 200","cpp and - and senior and pizza 250","- and backend and senior and - 150","- and - and - and chicken 100","- and - and - and - 150")
-
-    val startTime:Long = measureTimeMillis  {
-        Kakao2021Question3().solution(info, query)
+    for(i in  2 downTo 0) {
+        println(i)
     }
-    println(startTime)
+    // var info:Array<String> = arrayOf<String>("java backend junior pizza 150","python frontend senior chicken 210","python frontend senior chicken 150","cpp backend senior pizza 260","java backend junior chicken 80","python backend senior chicken 50")
+    // var query:Array<String> = arrayOf<String>("java and backend and junior and pizza 100","python and frontend and senior and chicken 200","cpp and frontend and senior and pizza 250","- and backend and senior and - 150","- and - and - and chicken 100","- and - and - and - 150")
+
+    // val startTime:Long = measureTimeMillis  {
+    //     Kakao2021Question3().solution(info, query)
+    // }
+    // println(startTime)
 }
 
 class Kakao2021Question3 {
@@ -41,6 +44,9 @@ class Kakao2021Question3 {
             it.sort()
         }
 
+        // for(i in scoreList.indices) {
+        //     println(scoreList.get(i).toString())
+        // }
 
         for(i in query.indices) {
             val(queryInfo, score) = SplitInfo(query.get(i), queryRegex)
@@ -49,12 +55,31 @@ class Kakao2021Question3 {
                 wordMap.get(queryInfo.get(1))!!  * 3 * 3 +
                 wordMap.get(queryInfo.get(2))!!  * 3 +
                 wordMap.get(queryInfo.get(3))!!)
-            answer.set(i, scoreList.get(index).filter { it >= score}.size)
+            println("========")
+            var ret:Int = scoreList.get(index).binarySearch(score)
+            println("score:" + score)
+            println(scoreList.get(index).toString())
+            println("ret:" + ret)
+            if (ret < 0) {
+                ret = (ret + 1) * -1
+            } else if(ret > 0) {
+                for(j in ret downTo 0) {
+                    if(scoreList.get(index).get(j) == score) {
+                        ret = j
+                    } else {
+                        break
+                    }
+                }
+            }
+            println("answer:" + (scoreList.get(index).size - ret))
+            
+            answer.set(i, scoreList.get(index).size - ret)
         }
 
-        for (i in answer.indices) {
-            println(answer.get(i))
-        }
+        // for(i in answer.indices) {
+        //     println(answer.get(i))
+        // }
+
         return answer
     }
 
