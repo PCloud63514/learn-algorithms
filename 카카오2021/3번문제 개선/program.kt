@@ -44,22 +44,15 @@ class Kakao2021Question3 {
             it.sort()
         }
 
-        // for(i in scoreList.indices) {
-        //     println(scoreList.get(i).toString())
-        // }
-
         for(i in query.indices) {
             val(queryInfo, score) = SplitInfo(query.get(i), queryRegex)
             val index:Int = 
-                (wordMap.get(queryInfo.get(0))!!  * 3 * 3 * 3 +
-                wordMap.get(queryInfo.get(1))!!  * 3 * 3 +
-                wordMap.get(queryInfo.get(2))!!  * 3 +
+                (wordMap.get(queryInfo.get(0))!! * 3 * 3 * 3 +
+                wordMap.get(queryInfo.get(1))!! * 3 * 3 +
+                wordMap.get(queryInfo.get(2))!! * 3 +
                 wordMap.get(queryInfo.get(3))!!)
-            println("========")
+                
             var ret:Int = scoreList.get(index).binarySearch(score)
-            println("score:" + score)
-            println(scoreList.get(index).toString())
-            println("ret:" + ret)
             if (ret < 0) {
                 ret = (ret + 1) * -1
             } else if(ret > 0) {
@@ -71,14 +64,8 @@ class Kakao2021Question3 {
                     }
                 }
             }
-            println("answer:" + (scoreList.get(index).size - ret))
-            
-            answer.set(i, scoreList.get(index).size - ret)
+            answer.set(i, answer.get(i) + (scoreList.get(index).size - ret))
         }
-
-        // for(i in answer.indices) {
-        //     println(answer.get(i))
-        // }
 
         return answer
     }
