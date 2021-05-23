@@ -1,10 +1,6 @@
-import java.text.SimpleDateFormat
-import java.util.Calendar
-
 fun main() {
-    
-    println(Kakao2021Question5().solution("02:03:55", "00:14:15", 
-        arrayOf<String>("01:20:15-01:45:14", "00:40:31-01:00:00", "00:25:50-00:48:29", "01:30:59-01:53:29", "01:37:44-02:02:30")))
+    println(Kakao2021Question5().solution("50:00:00", "50:00:00", 
+        arrayOf<String>("15:36:51-38:21:49", "10:14:18-15:36:51", "38:21:49-42:51:45")))
 }
 
 /*
@@ -25,37 +21,34 @@ fun main() {
     output
         - result:String = "01:30:59" */
 class Kakao2021Question5 {
-
     fun solution(play_time: String, adv_time: String, logs: Array<String>): String {
         val ptimeSec = ConvertSecond(play_time)
         val atimeSec = ConvertSecond(adv_time)
 
-        val chaceArray:Array<Int> = Array<Int>(ptimeSec + 1) { 0 } //play_time의 총 길이만큼 공간 생성
+        val chaceArray:Array<Int> = Array<Int>(ptimeSec + 1) { 0 }
 
         for( i in logs.indices) {
-            val slist = logs.get(i).split("-") //logs의 시간 분리
-            val sSec= ConvertSecond(slist[0])  //시작 시간의 초
-            val eSec= ConvertSecond(slist[1])  //종료 시간의 초
+            val slist = logs.get(i).split("-")
+            val sSec= ConvertSecond(slist[0])
+            val eSec= ConvertSecond(slist[1]) 
 
-            chaceArray.set(sSec, chaceArray.get(sSec) + 1) // 시작 시간 기록
-            chaceArray.set(eSec, chaceArray.get(eSec) - 1) // 종료 시간 기록
+            chaceArray.set(sSec, chaceArray.get(sSec) + 1) 
+            chaceArray.set(eSec, chaceArray.get(eSec) - 1)
         }
 
-        // 이전 index 시간과 현재 index 시간을 더한다.
-        // 1이상이면 상영 중인 것이며, -1을 마주하면 종료한 형식이 된다. 
-        for (i in 1 until ptimeSec) {
+        for (i in 1..ptimeSec) {
             chaceArray.set(i, chaceArray.get(i) + chaceArray.get(i - 1))
         }
 
         var answerNum:Int = 0
-        var answerIndex:Int = atimeSec
+        var answerIndex:Int = 0
         
-        for(i in 1..atimeSec) {
+        for(i in 1 until atimeSec) {
             answerNum += chaceArray.get(i)
         }
         var tempNum = answerNum
 
-        for(i in (atimeSec + 1)..ptimeSec) {
+        for(i in atimeSec until ptimeSec) {
             answerNum = answerNum + chaceArray.get(i) - chaceArray.get(i-atimeSec)
             if (answerNum > tempNum) {
                 tempNum = answerNum
@@ -68,10 +61,6 @@ class Kakao2021Question5 {
         return answer
     }
 
-    fun Max(A:Int, B:Int):Int {
-        return if( A <= B) B else A
-    }
-
     fun ConvertSecond(strTime:String):Int {
         val (t, m, s) = ConvertTime(strTime)
         return time2Second(t, m, s)
@@ -82,7 +71,6 @@ class Kakao2021Question5 {
         return Triple(sl[0].toInt(), sl[1].toInt(), sl[2].toInt())
     }
 
-    // 0초면? 이거도 처리해둬야함
     fun time2Second(time:Int, minute:Int, second:Int):Int {
         return (time * 60 * 60) + (minute * 60) + (second)
     }
