@@ -25,7 +25,7 @@ class Kakao2021Question5 {
         val ptimeSec = ConvertSecond(play_time)
         val atimeSec = ConvertSecond(adv_time)
 
-        val chaceArray:Array<Int> = Array<Int>(ptimeSec + 1) { 0 }
+        val chaceArray:Array<Long> = Array<Long>(ptimeSec + 1) { 0 }
 
         for( i in logs.indices) {
             val slist = logs.get(i).split("-")
@@ -40,8 +40,8 @@ class Kakao2021Question5 {
             chaceArray.set(i, chaceArray.get(i) + chaceArray.get(i - 1))
         }
 
-        var answerNum:Int = 0
-        var answerIndex:Int = 0
+        var answerNum:Long = 0
+        var answerIndex:Long = 0
         
         for(i in 1 until atimeSec) {
             answerNum += chaceArray.get(i)
@@ -52,7 +52,7 @@ class Kakao2021Question5 {
             answerNum = answerNum + chaceArray.get(i) - chaceArray.get(i-atimeSec)
             if (answerNum > tempNum) {
                 tempNum = answerNum
-                answerIndex = i - atimeSec + 1
+                answerIndex = (i - atimeSec + 1).toLong()
             }
         }
 
