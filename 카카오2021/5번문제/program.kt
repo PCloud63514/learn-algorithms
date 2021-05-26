@@ -25,31 +25,31 @@ class Kakao2021Question5 {
         val ptimeSec = ConvertSecond(play_time)
         val atimeSec = ConvertSecond(adv_time)
 
-        val chaceArray:Array<Int> = Array<Int>(ptimeSec + 1) { 0 }
+        val cacheArray:Array<Int> = Array<Int>(ptimeSec + 1) { 0 }
 
         for( i in logs.indices) {
             val slist = logs.get(i).split("-")
             val sSec= ConvertSecond(slist[0])
             val eSec= ConvertSecond(slist[1]) 
 
-            chaceArray.set(sSec, chaceArray.get(sSec) + 1) 
-            chaceArray.set(eSec, chaceArray.get(eSec) - 1)
+            cacheArray.set(sSec, cacheArray.get(sSec) + 1) 
+            cacheArray.set(eSec, cacheArray.get(eSec) - 1)
         }
 
         for (i in 1..ptimeSec) {
-            chaceArray.set(i, chaceArray.get(i) + chaceArray.get(i - 1))
+            cacheArray.set(i, cacheArray.get(i) + cacheArray.get(i - 1))
         }
 
         var answerNum:Int = 0
         var answerIndex:Int = 0
         
         for(i in 1 until atimeSec) {
-            answerNum += chaceArray.get(i)
+            answerNum += cacheArray.get(i)
         }
         var tempNum = answerNum
 
         for(i in atimeSec until ptimeSec) {
-            answerNum = answerNum + chaceArray.get(i) - chaceArray.get(i-atimeSec)
+            answerNum = answerNum + cacheArray.get(i) - cacheArray.get(i-atimeSec)
             if (answerNum > tempNum) {
                 tempNum = answerNum
                 answerIndex = i - atimeSec + 1
