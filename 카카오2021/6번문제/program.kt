@@ -1,17 +1,17 @@
 fun main() {
-    // var board = Array<IntArray>(4) { IntArray(4) { 0 }}
-    // board.set(0, intArrayOf(1,0,0,3))
-    // board.set(1, intArrayOf(2,0,0,0))
-    // board.set(2, intArrayOf(0,0,0,2))
-    // board.set(3, intArrayOf(3,0,1,0))
+    var board = Array<IntArray>(4) { IntArray(4) { 0 }}
+    board.set(0, intArrayOf(1,0,0,3))
+    board.set(1, intArrayOf(2,0,0,0))
+    board.set(2, intArrayOf(0,0,0,2))
+    board.set(3, intArrayOf(3,0,1,0))
 
-    // println(Kakao2021Question6().solution(board, 1, 0))
-    var board2 = Array<IntArray>(4) { IntArray(4) { 0 }}
-    board2.set(0, intArrayOf(3,0,0,2))
-    board2.set(1, intArrayOf(0,0,1,0))
-    board2.set(2, intArrayOf(0,1,0,0))
-    board2.set(3, intArrayOf(2,0,0,3))
-    println(Kakao2021Question6().solution(board2, 0, 1))
+    println(Kakao2021Question6().solution(board, 1, 0))
+    // var board2 = Array<IntArray>(4) { IntArray(4) { 0 }}
+    // board2.set(0, intArrayOf(3,0,0,2))
+    // board2.set(1, intArrayOf(0,0,1,0))
+    // board2.set(2, intArrayOf(0,1,0,0))
+    // board2.set(3, intArrayOf(2,0,0,3))
+    // println(Kakao2021Question6().solution(board, 0, 1))
 }
 
 /**
@@ -44,7 +44,7 @@ class Kakao2021Question6 {
      * cnt : 이동 횟수
      * @return : move count
      */
-    fun bfs(board: ArrayList<MutableList<Int>>, start:Position, end:Position):Int {
+    fun bfs(board:Array<IntArray>, start:Position, end:Position):Int {
         val moveValues = ArrayList<IntArray>() // 상하좌우 이동 값 생성
         moveValues.add(intArrayOf(-1, 0))
         moveValues.add(intArrayOf(1, 0))
@@ -89,7 +89,7 @@ class Kakao2021Question6 {
                 }
             }
         }
-        return 999999
+        return 9999999
     }
 
     /** 범위에서 벗어났을 경우 에러(true) */
@@ -100,6 +100,43 @@ class Kakao2021Question6 {
         return false
     }
 
+    /** 순서중복순열
+     * @list : 값을 가져올 배열
+     * @r : list에서 가져올 요소의 갯수
+     *
+     * ex) 1,2,3 ... 2,1,3 | 2,1,4 .. 4,3,1 | 4,3,2
+     */
+    fun Combination(list:List<Int>, r:Int):ArrayList<List<Int>> {
+        var chace = ArrayList<List<Int>>()
+        var visited = MutableList(list.size) { false }
+        var temp = ArrayList<Int>()
+        _combination(
+                chace=chace,
+                list=list,
+                r=r,
+                temp=temp,
+                visited=visited)
+
+        return chace
+    }
+    /** Combination 내부 로직 */
+    private fun _combination(chace:ArrayList<List<Int>>, list:List<Int>, r:Int, temp:ArrayList<Int>, visited:MutableList<Boolean>) {
+        if(r == 0) {
+            chace.add(temp.clone() as List<Int>)
+        }
+        for(i in 0..list.lastIndex) {
+            if(visited[i] == false) {
+                visited[i] = true
+                temp.add(list[i])
+                _combination(chace, list, r-1, temp, visited)
+                visited[i] = false
+                temp.removeAt(temp.lastIndex)
+            }
+        }
+    }
+
+
+
     /**
      * board:Array<IntArray> = 게임 판
      * r:Int = 시작 위치(행-row)  0 ~ 3
@@ -107,50 +144,59 @@ class Kakao2021Question6 {
      * result 입력 수
      */
     fun solution(board: Array<IntArray>, r: Int, c: Int): Int {
-        var tempBoard = ArrayList<MutableList<Int>>()
-        board.forEach {
-            tempBoard.add(it.toMutableList())
-        }
-        return navigation(tempBoard, Position(r, c))
-    }
+        var answer: Int = 9999999
+        val cards = Cards(board); // cards 가져옴
+        var combines = Combination(list=cards.keys.toList(), r=cards.size) // 검색 순열 만듬
 
-    fun navigation(board: ArrayList<MutableList<Int>>, currentCard:Position):Int {
-        //최대 6장의 카드가 존재하므로 1 ~ 6
-        var ret = 999999
-        for(i in 1..6) {
-            var cards = ArrayList<Position>()
-            //4x4 영역에서 i 번째 카드 갖고오기
-            for(row in 0..3) {
-                for(col in 0..3) {
-                    if(board[row][col] == i) {
-                        cards.add(Position(row, col))
+        // 순열 순 검색 시작
+        combines.forEach { it ->
+            var tempBoard = board.clone() as Array<IntArray> // Board 복사 (카드 제거 용)
+            var cnt = 0 // 값
+            var start = Position(r, c) // 시작 위치
+            // 순열 1개 가져옴
+            for(i in it.indices) {
+                val cardA:Position = cards.get(it[i])!!.get(0) // Card A
+                val cardB:Position = cards.get(it[i])!!.get(1) // card B
+                // 이동 값 계산
+                val first:Int = bfs(tempBoard, start, cardA) + bfs(tempBoard, cardA, cardB)
+                val second:Int = bfs(tempBoard, start, cardB) + bfs(tempBoard, cardB, cardA)
+
+                // 세트를 맞춘 카드는 제거
+                tempBoard[cardA.row][cardA.col] = 0
+                tempBoard[cardB.row][cardB.col] = 0
+
+                // first와 second가 동일할 수 있으므로 다음 카드와의 거리를 비교
+                if(first == second && i != it.lastIndex) {
+                    val nextCardA = cards.get(it[i+1])!!.get(0)
+                    val nextCardB = cards.get(it[i+1])!!.get(1)
+
+                    val resultA = Math.min(bfs(tempBoard, cardA, nextCardA), bfs(tempBoard, cardA, nextCardB))
+                    val resultB = Math.min(bfs(tempBoard, cardB, nextCardA), bfs(tempBoard, cardB, nextCardB))
+
+                    if(resultA < resultB) {
+                        start = cardA
+                    } else if(resultA > resultB) {
+                        start = cardB
                     }
+                    cnt += first
+                    continue
+                }
+
+                if(first < second) {
+                    start = cardB
+                    cnt += first
+                } else if(first > second) {
+                    start = cardA
+                    cnt += second
+                } else {
+                    cnt += first
                 }
             }
-
-            if (cards.isEmpty()) continue
-
-            //Current 부터 방금 꺼낸 카드까지의 이동 거리를 계산. 단 i 번째 카드는 총 2장이므로 순서를 바꿔서도 계산
-            var A = bfs(board, currentCard, cards.get(0)) + bfs(board, cards.get(0), cards.get(1))
-            var B = bfs(board, currentCard, cards.get(1)) + bfs(board, cards.get(1), cards.get(0))
-
-            board[cards.get(0).row][cards.get(0).col] = 0
-            board[cards.get(1).row][cards.get(1).col] = 0
-
-            // 둘 중 뭐가 더 작은지 계산
-            ret = Math.min(ret, A + navigation(board, cards.get(1)))
-            ret = Math.min(ret, B + navigation(board, cards.get(0)))
-
-            board[cards.get(0).row][cards.get(0).col] = i
-            board[cards.get(1).row][cards.get(1).col] = i
+            answer = Math.min(answer, cnt)
         }
-
-        if(ret == 999999) {
-            return 0
-        }
-
-        return ret
+        return answer
     }
+
 }
 
 data class Recode(val position:Position, val cnt:Int)
