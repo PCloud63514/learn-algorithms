@@ -5,7 +5,7 @@ import java.util.Queue;
 
 public class Test {
     public static void main(String[] args) {
-        Solution solution = new Solution();
+        SolutionAAAA solution = new SolutionAAAA();
         int[][] test1 = {{1,0,0,3},{2,0,0,0},{0,0,0,2},{3,0,1,0}};
         int[][] test2 = {{3,0,0,2},{0,0,1,0},{0,1,0,0},{2,0,0,3}};
 
@@ -14,7 +14,7 @@ public class Test {
     }
 }
 
-class Solution {
+class SolutionAAAA {
     class Position {
         int row, col, cnt;
         public Position(int row, int col, int cnt) {
