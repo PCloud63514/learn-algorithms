@@ -1,0 +1,5 @@
+두 테이블의 입력시간 비교 문제.
+A 테이블의 DATETIME 요소가 B테이블의 DATETIME 요소보다 큰 것을 출력. (A 테이블 기준 정렬)
+https://programmers.co.kr/learn/courses/30/lessons/59043?language=mysql
+
+SELECT OUTS.ANIMAL_ID, OUTS.NAME from ANIMAL_OUTS OUTS left outer join ANIMAL_INS INS on INS.ANIMAL_ID=OUTS.ANIMAL_ID where INS.DATETIME > OUTS.DATETIME ORDER BY INS.DATETIME ASC
