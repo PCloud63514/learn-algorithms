@@ -1,0 +1,5 @@
+// 가장 늦게 입력된 시간 출력.
+SELECT DATETIME as 시간 
+from ANIMAL_INS 
+ORDER BY DATETIME DESC 
+limit 1;
