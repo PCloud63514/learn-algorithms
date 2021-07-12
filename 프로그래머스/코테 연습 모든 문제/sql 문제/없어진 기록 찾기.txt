@@ -1,4 +1,0 @@
-ANIMAL_OUTS 테이블과 ANIMAL_INS 테이블 비교 쿼리문 작성 문제
-ANIMAL_OUTS 테이블에만 존재하고 ANIMAL_INS 테이블에 존재하지 않는 요소만 출력한다.
-
-SELECT OUTS.ANIMAL_ID, OUTS.NAME from ANIMAL_OUTS OUTS left outer join ANIMAL_INS INS on OUTS.ANIMAL_ID=INS.ANIMAL_ID where INS.ANIMAL_ID is null
