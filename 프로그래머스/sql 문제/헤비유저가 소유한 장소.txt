@@ -1,0 +1,8 @@
+SELECT ID, NAME, HOST_ID 
+from PLACES
+where HOST_ID IN(
+    SELECT HOST_ID from PLACES
+    Group by HOST_ID
+    Having count(ID) >= 2
+)
+Order by ID ASC
