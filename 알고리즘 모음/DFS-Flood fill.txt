@@ -1,0 +1,65 @@
+class Solution {
+    @Test
+    public void solution() {
+        // 5, 5 영역
+        int[][] board = new int[][] {
+                {0,0,0,0,0},
+                {0,0,0,1,1},
+                {0,0,0,1,0},
+                {1,1,1,1,0},
+                {0,0,0,0,0}
+        };
+
+        DFS_Flood_Fill(board, 1, 1, 3);
+
+        for(int i = 0; i < board.length; i++) {
+            for(int j = 0; j < board[i].length; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println("");
+        }
+    }
+
+    /**
+     * 다차원 배열의 특정 칸과 연결된 영역을 검색하는 알고리즘.
+     * 그림판의 채우기와 같은 기능.
+     * @param r - 시작 row 좌표
+     * @param c - 시작 col 좌표
+     * @param color - 적용할 색상
+     */
+    public void DFS_Flood_Fill(int[][]board, int r, int c, int color) {
+        // board를 탐색할 때 이동 방향 (왼쪽, 오른쪽, 위, 아래)
+        int[][] JoyStick = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        // 5, 5 방문 영역 표시를 위한 변수
+        boolean[][] visited = new boolean[5][5];
+        Stack<int[]> stack = new Stack<>();
+        stack.push(new int[]{r,c});
+
+        while(stack.empty() == false) {
+            int[] currentPoint = stack.pop();
+            if(visited[currentPoint[0]][currentPoint[1]]) {
+                continue;
+            }
+            visited[currentPoint[0]][currentPoint[1]] = true;
+            board[currentPoint[0]][currentPoint[1]] = color; // visited로 안해도 해당 목표 color와 비교해도 동작가능할듯
+
+            for(int i = 0; i < JoyStick.length; i++) {
+                int nextRow = currentPoint[0] + JoyStick[i][0];
+                int nextCol = currentPoint[1] + JoyStick[i][1];
+                // 현재 좌표를 JoyStick을 이용해 이동 시 board를 벗어나는지 검사.
+                if(nextRow < 0 || nextRow > board.length - 1 || nextCol < 0 || nextCol > board.length - 1) {
+                    continue;
+                }
+                // 이미 방문한 영역인지 검사
+                if(visited[nextRow][nextCol]) {
+                    continue;
+                }
+                // 0만 채우는 것을 기준으로 하기 때문에 0이 아니면 패스
+                if(board[nextRow][nextCol] != 0) {
+                    continue;
+                }
+                stack.push(new int[]{nextRow, nextCol});
+            }
+        }
+    }
+}
