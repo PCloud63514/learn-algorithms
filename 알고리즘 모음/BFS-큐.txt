@@ -1,0 +1,37 @@
+class Solution {
+    int n = 5;
+    @Test
+    public void solution() {
+        int[][] graph = new int[n][6];
+        graph[0][1] = graph[1][0]= 1;
+        graph[0][2] = graph[2][0] = 1;
+        graph[1][3] = graph[3][1] = 1;
+        graph[1][4] = graph[4][1] = 1;
+        graph[2][4] = graph[4][2] = 1;
+        graph[3][4] = graph[4][3] = 1;
+
+        bfs(graph, 0);
+    }
+
+    /**
+     * @param graph - 그래프
+     * @param node - 시작 노드
+     */
+    void bfs(int[][] graph, int node) {
+        boolean[] visited = new boolean[5];
+        Queue<Integer> queue = new LinkedList<>();
+        visited[node] = true;
+        queue.add(node);
+
+        while(queue.isEmpty() == false) {
+            int currNode = queue.remove();
+            System.out.println(currNode + "방문");
+            for(int next = 0; next < n; next++) {
+                if(visited[next] == false && graph[currNode][next] != 0) {
+                    visited[next] = true;
+                    queue.add(next);
+                }
+            }
+        }
+    }
+}
