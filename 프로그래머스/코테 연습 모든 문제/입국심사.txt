@@ -1,0 +1,27 @@
+import java.util.*;
+class Solution {
+        public long solution(int n, int[] times) {
+            long answer = 0;
+            // 심사관의 심사 시간 오름차순 정렬
+            Arrays.sort(times);
+            long cursor = 0;
+            // 이분 탐색을 위해 심사가 최악으로 늦는 경우를 계산한다.
+            long maxRequiredTime = n * times[times.length - 1];
+
+            while (cursor <= maxRequiredTime) {
+                long v = (cursor + maxRequiredTime) / 2;
+                // 최고로 소모되는 시간을 기반으로, 각 심사관이 심사를 실시했을 때 심사할 수 있는 인원을 계산
+                long count = 0;
+                for (int i = 0; i < times.length; i++) {
+                    count += v / times[i];
+                }
+                if (count < n) {
+                    cursor = v + 1;
+                } else {
+                    maxRequiredTime = v - 1;
+                    answer = v;
+                }
+            }
+            return answer;
+        }
+}
