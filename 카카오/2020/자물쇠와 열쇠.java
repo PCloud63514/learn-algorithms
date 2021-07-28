@@ -1,5 +1,6 @@
-import java.util.*;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 class Solution {
 
     /**
@@ -11,7 +12,7 @@ class Solution {
      */
     public boolean solution(int[][] key, int[][] lock) {
         int offset = key.length - 1;
-
+        // key의 크기와
         for (int r = 0; r < offset + lock.length; ++r) {
             for (int c = 0; c < offset + lock.length; ++c) {
                 //4방향 회전
@@ -21,6 +22,8 @@ class Solution {
                     int[][] arr = new int[58][58];
                     for (int i = 0; i < lock.length; ++i) {
                         for(int j = 0; j < lock.length; ++j) {
+                            // 패딩이 적용된 lock 배열을 만든다.
+                            //
                             arr[offset + i][offset + j] = lock[i][j];
                         }
                     }
@@ -34,6 +37,7 @@ class Solution {
         return false;
     }
 
+    //전부 1인지 검사.
     private boolean check(int[][] arr, int offset, int n) {
         for ( int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) {
@@ -45,6 +49,14 @@ class Solution {
         return true;
     }
 
+    /**
+     *
+     * @param arr 적용할 배열
+     * @param key
+     * @param rot 0 - 0도 / 1 - 90도 / 2 - 180도 / 3 - 270도
+     * @param r row 위치
+     * @param c col 위치
+     */
     private void match(int[][] arr, int[][] key, int rot, int r, int c) {
         int n = key.length - 1;
         for (int i = 0; i <= n; ++i) {
