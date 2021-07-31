@@ -1,0 +1,39 @@
+class Solution {
+
+    @Test
+    void main() {
+        char[] data = {'A', 'B', 'C', 'D'};
+        solution(data, data.length);
+    }
+
+    /**
+     *
+     * @param arr
+     * @param n 원소의 수
+     */
+    public void solution(char[] arr, int n) {
+        for (int i = 0; i < (1 << n); ++i) {
+            for (int j = 0; j < n; ++j) {
+                if ((i & 1 << j) != 0) {
+                    System.out.print(arr[j] + " ");
+                }
+            }
+            System.out.println("");
+        }
+    }
+}
+//    A
+//    B
+//    A B
+//    C
+//    A C
+//    B C
+//    A B C
+//    D
+//    A D
+//    B D
+//    A B D
+//    C D
+//    A C D
+//    B C D
+//    A B C D
