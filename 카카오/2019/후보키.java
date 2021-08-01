@@ -6,13 +6,10 @@ import java.util.*;
 class Solution {
     @Test
     public void Test() {
-        int solution = solution2(new String[][]{{"100", "ryan", "music", "2"}, {"200", "apeach", "math", "2"}, {"300", "tube", "computer", "3"}, {"400", "con", "computer", "4"}, {"500", "muzi", "music", "3"}, {"600", "apeach", "music", "2"}});
+        int solution = solution(new String[][]{{"100", "ryan", "music", "2"}, {"200", "apeach", "math", "2"}, {"300", "tube", "computer", "3"}, {"400", "con", "computer", "4"}, {"500", "muzi", "music", "3"}, {"600", "apeach", "music", "2"}});
         Assertions.assertEquals(solution, 2);
     }
-    int STUDENT_NUM = 0;
-    int NAME = 1;
-    int MAJOR = 2;
-    int GRADE = 3;
+
     Comparator<Integer> comparator = new Comparator<Integer>() {
         int countBits(int n) {
             int ret = 0;
@@ -36,7 +33,7 @@ class Solution {
         }
     };
 
-    public int solution2(String[][] relation) {
+    public int solution(String[][] relation) {
         int answer = 0;
         int rowSize = relation.length;
         int colSize = relation[0].length;
