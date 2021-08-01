@@ -32,7 +32,12 @@ class Solution {
             }
         }
     };
-
+    /**
+     * 유일성과 최소성을 만족한 집합의 갯수를 계산하는 문제.
+     *
+     * @param relation
+     * @return
+     */
     public int solution(String[][] relation) {
         int answer = 0;
         int rowSize = relation.length;
@@ -46,7 +51,7 @@ class Solution {
         }
 
         Collections.sort(candidates, comparator);
-
+        // 최소성을 만족하지 못한 요소를 제거
         while (!candidates.isEmpty()) {
             int n = candidates.remove(0);
             ++answer;
@@ -61,7 +66,14 @@ class Solution {
         return answer;
     }
 
-    // 유일성 체크 (유일성이 확인되면 true 반환)
+    /**
+     * 유일성 검사 함수
+     * @param relation - 테이블
+     * @param rowSize - relation의 rowSize
+     * @param colSize - relation의 colSize
+     * @param subset - 부분집합 비트 값
+     * @return 유일성을 확보하면 true 반환
+    **/
     public boolean check(String[][] relation, int rowSize, int colSize, int subset) {
         for (int i = 0; i < rowSize - 1; ++i) {
             for (int j = i + 1; j < rowSize; ++j) {
