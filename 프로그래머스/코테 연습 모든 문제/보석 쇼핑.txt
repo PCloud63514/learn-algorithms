@@ -1,0 +1,60 @@
+import org.junit.jupiter.api.Test;
+
+import java.util.*;
+
+class Solution {
+    @Test
+    void main() {
+        String[] args = new String[] {"ZZZ", "YYY", "NNNN", "YYY", "BBB"};
+        int[] answer = solution(args);
+
+        for (int i = 0; i < answer.length; ++i) {
+            System.out.print(answer[i] + ", ");
+        }
+    }
+
+    public int[] solution(String[] gems) {
+        int[] answer = new int[2];
+        HashMap<String, Integer> gemCollection = new HashMap<String, Integer>();
+
+        // gem 종류 별로 수집
+        for (int i = 0; i <gems.length; ++i) {
+            if (gemCollection.containsKey(gems[i]) == false) {
+                gemCollection.put(gems[i], 0);
+            }
+        }
+        int s = 0, e = 0;
+
+        for (e = 0; e < gems.length; ++e) {
+            String gem = gems[e];
+            boolean validate = true;
+            for (Integer value : gemCollection.values()) {
+                if (value == 0) {
+                    validate = false;
+                    break;
+                }
+            }
+            if (validate) {
+                break;
+            } else {
+                int gemCount = gemCollection.get(gem);
+                gemCollection.put(gem, gemCount + 1);
+            }
+        }
+
+        for (s = 0; s < gems.length; ++s) {
+            String gem = gems[s];
+            int gemCount = gemCollection.get(gem);
+            if (0 == gemCount - 1) {
+                break;
+            } else {
+                gemCollection.put(gem, gemCount - 1);
+            }
+        }
+
+        answer[0] = ++s;
+        answer[1] = e;
+
+        return answer;
+    }
+}
