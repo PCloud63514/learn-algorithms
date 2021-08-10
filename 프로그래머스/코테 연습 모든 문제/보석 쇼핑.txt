@@ -1,3 +1,5 @@
+package com.pcloud.jcodetest;
+
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -5,7 +7,7 @@ import java.util.*;
 class Solution {
     @Test
     void main() {
-        String[] args = new String[] {"ZZZ", "YYY", "NNNN", "YYY", "BBB"};
+        String[] args = new String[] {"DIA", "RUBY", "RUBY", "DIA", "DIA", "EMERALD", "SAPPHIRE", "DIA"};
         int[] answer = solution(args);
 
         for (int i = 0; i < answer.length; ++i) {
@@ -15,46 +17,39 @@ class Solution {
 
     public int[] solution(String[] gems) {
         int[] answer = new int[2];
-        HashMap<String, Integer> gemCollection = new HashMap<String, Integer>();
+        int currentKindCount = 0; // 수집한 보석의 종류
+        HashMap<String, Boolean> gemCollection = new HashMap<String, Boolean>();
 
-        // gem 종류 별로 수집
-        for (int i = 0; i <gems.length; ++i) {
+        for (int i = 0; i < gems.length; ++i) {
             if (gemCollection.containsKey(gems[i]) == false) {
-                gemCollection.put(gems[i], 0);
+                gemCollection.put(gems[i], false);
             }
         }
-        int s = 0, e = 0;
+        int gemKindCount = gemCollection.size(); // 모든 보석의 종류
+        int s = 0, e = 1;
+        gemCollection.put(gems[0], true);
+        currentKindCount++;
 
-        for (e = 0; e < gems.length; ++e) {
+        while (e < gems.length) {
             String gem = gems[e];
-            boolean validate = true;
-            for (Integer value : gemCollection.values()) {
-                if (value == 0) {
-                    validate = false;
-                    break;
+            String start_gem = gems[s];
+
+            if (gem.equals(start_gem)) {
+                s++;
+                e = s + 1;
+            } else {
+                if (gemCollection.get(gem) == false) {
+                    gemCollection.put(gem, true);
+                    currentKindCount++;
+                    if (currentKindCount == gemKindCount) {
+                        break;
+                    }
                 }
-            }
-            if (validate) {
-                break;
-            } else {
-                int gemCount = gemCollection.get(gem);
-                gemCollection.put(gem, gemCount + 1);
+                e++;
             }
         }
-
-        for (s = 0; s < gems.length; ++s) {
-            String gem = gems[s];
-            int gemCount = gemCollection.get(gem);
-            if (0 == gemCount - 1) {
-                break;
-            } else {
-                gemCollection.put(gem, gemCount - 1);
-            }
-        }
-
-        answer[0] = ++s;
-        answer[1] = e;
-
+        answer[0] = s + 1;
+        answer[1] = e + 1;
         return answer;
     }
 }
