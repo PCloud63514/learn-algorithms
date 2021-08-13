@@ -1,0 +1,25 @@
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String numStr = scanner.nextLine().trim();
+        char[] chars = numStr.toCharArray();
+        LinkedList<Integer> list = new LinkedList<>();
+        int temp = 0;
+        for (int i = 0; i < chars.length; ++i) {
+            if (chars[i] == '1')
+                temp += Math.pow(2, chars.length - 1 - i);
+        }
+        while (temp / 8 != 0) {
+            list.addFirst(temp % 8);
+            temp = temp / 8;
+        }
+        if (temp != 0) list.addFirst(temp);
+
+        StringBuilder builder = new StringBuilder();
+        for (Integer i : list) {
+            builder.append(i);
+        }
+        System.out.println(Integer.parseInt(builder.toString()));
+    }
+}
