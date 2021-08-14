@@ -1,0 +1,23 @@
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int pood = 2001;
+        int drink = 2001;
+
+        for (int i = 0; i < 3; ++i) {
+            pood = Math.min(pood, scanner.nextInt());
+        }
+
+        for (int i = 0; i < 2; ++i) {
+            drink = Math.min(drink, scanner.nextInt());
+        }
+
+        float answer = pood + drink;
+        answer += answer * 10.0 / 100.0;
+
+        System.out.print(answer);
+    }
+}
