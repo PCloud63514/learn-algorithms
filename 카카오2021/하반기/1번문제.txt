@@ -1,0 +1,43 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+       new Solution().solution(new String[]{"muzi", "frodo", "apeach", "neo"}, new String[]{"muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi"}, 2);
+    }
+}
+// 시작 2시
+// 종료 2시 15분
+class Solution {
+    public int[] solution(String[] id_list, String[] report, int k) {
+        int[] answer = new int[id_list.length];
+        Map<String, Integer> reportIndexMap = new HashMap<String ,Integer>();
+        Map<String, Set<String>> reportMap = new HashMap<String, Set<String>>();
+
+        for (int i = 0; i < id_list.length; ++i) {
+            reportIndexMap.put(id_list[i], i);
+            reportMap.put(id_list[i], new HashSet<String>());
+        }
+
+        for (int i = report.length - 1; i >= 0; --i) {
+            String[] userSplit = report[i].split(" ");
+            String reporter = userSplit[0];
+            String target = userSplit[1];
+
+            reportMap.get(target).add(reporter);
+        }
+
+        Iterator<String> ids = reportMap.keySet().iterator();
+
+        while (ids.hasNext()) {
+            String target = ids.next();
+            Set<String> reportGroup = reportMap.get(target);
+
+            if (k <= reportGroup.size()) {
+                for (String r : reportGroup) {
+                    answer[reportIndexMap.get(r)]++;
+                }
+            }
+        }
+        return answer;
+    }
+}

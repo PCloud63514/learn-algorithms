@@ -1,0 +1,59 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+       new Solution().solution(99999, 3);
+    }
+}
+
+//2시 16분 시작
+//4시 28분 종료
+class Solution {
+    public int solution(int n, int k) {
+        int answer = 0;
+
+        String convertValue = convert(n, k, new StringBuilder());
+        int s = 0;
+        while (s < convertValue.length()) {
+            int zeroIndex = convertValue.indexOf("0", s);
+            if (s == zeroIndex) {
+                s++;
+                continue;
+            }
+            if (zeroIndex == -1) {
+                zeroIndex = convertValue.length();
+            }
+            long number = Long.parseLong(convertValue.substring(s, zeroIndex));
+
+            if (primeValidate(number)) {
+                answer++;
+            }
+            s = zeroIndex;
+        }
+        return answer;
+    }
+
+    public boolean primeValidate(Long number) {
+        if (number <= 1) {
+            return false;
+        }
+
+        for (int i = 2; i <= Math.sqrt(number); ++i) {
+            if (number % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // k 진수 변환
+    public String convert(int n, int k, StringBuilder result) {
+        if (0 >= n) {
+            return result.reverse().toString();
+        }
+        int division = n / k;
+        int remainder = n % k;
+        result.append(remainder);
+        return convert(division, k, result);
+    }
+}

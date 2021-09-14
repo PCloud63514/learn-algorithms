@@ -1,0 +1,81 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println(
+                new Solution().solution(new int[]{120, 0, 60, 591},
+                        new String[]{"16:00 3961 IN","16:00 0202 IN","18:00 3961 OUT","18:00 0202 OUT","23:58 3961 IN"})
+        );
+    }
+}
+
+//4시29분 시작
+//5시 28분 종료
+class Solution {
+    private static int DEFAULT_TIME = 0;
+    private static int DEFAULT_PRICE = 1;
+    private static int UNIT_TIME = 2;
+    private static int UNIT_PRICE = 3;
+    private static int RECORD_TIME = 0;
+    private static int RECORD_CAR_NUMBER = 1;
+    private static int RECORD_STATE = 2;
+    private static String STATE_IN = "IN";
+    private static String STATE_OUT = "OUT";
+
+    public int[] solution(int[] fees, String[] records) {
+        int[] answer = {};
+        Map<Integer, Long> stockTimeMap = new HashMap<Integer ,Long>();
+        Map<Integer, Long> carToTimeMap = new HashMap<Integer, Long>();
+
+        for (int i = 0; i < records.length; ++i) {
+            String[] split = records[i].split(" ");
+            Long time = timeToNumber(split[RECORD_TIME]);
+            int carNumber = Integer.parseInt(split[RECORD_CAR_NUMBER]);
+            String state = split[RECORD_STATE];
+
+            if (STATE_IN.equals(state)) {
+                carToTimeMap.put(carNumber, time);
+            } else {
+                Long inTime = carToTimeMap.get(carNumber);
+                long totalTime = time - inTime;
+                if (stockTimeMap.containsKey(carNumber)) {
+                    stockTimeMap.put(carNumber, stockTimeMap.get(carNumber) + totalTime);
+                } else {
+                    stockTimeMap.put(carNumber, totalTime);
+                }
+                carToTimeMap.remove(carNumber);
+            }
+        }
+
+        //끝까지 남아있는 애들 찾아서 누적 정산
+        Iterator<Integer> iterator = carToTimeMap.keySet().iterator();
+        Long shutDown = timeToNumber("23:59");
+        while(iterator.hasNext()) {
+            Integer carNumber = iterator.next();
+            // 24시 뺀거 토탈 타임에 넣음
+            Long totalTime = shutDown - carToTimeMap.get(carNumber);
+            if (stockTimeMap.containsKey(carNumber)) {
+                stockTimeMap.put(carNumber, stockTimeMap.get(carNumber) + totalTime);
+            } else {
+                stockTimeMap.put(carNumber, totalTime);
+            }
+        }
+
+        //돈계산
+        List<Integer> keys = new ArrayList<>(stockTimeMap.keySet());
+        Collections.sort(keys);
+        int index = 0;
+        answer = new int[keys.size()];
+        for (Integer carNumber : keys) {
+            Long totalTime = Math.max(0, stockTimeMap.get(carNumber) - fees[DEFAULT_TIME]);
+            Integer totalPrice = fees[DEFAULT_PRICE] + ((int)Math.ceil(totalTime / (double)fees[UNIT_TIME]) * fees[UNIT_PRICE]);
+            answer[index++] = totalPrice;
+        }
+         return answer;
+    }
+
+    Long timeToNumber(String time) {
+        String[] split = time.split(":");
+        return Long.parseLong(split[0]) * 60 + Long.parseLong(split[1]);
+    }
+}
