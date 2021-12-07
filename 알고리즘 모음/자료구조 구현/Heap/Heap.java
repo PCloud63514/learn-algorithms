@@ -11,6 +11,11 @@ class Heap<T> {
         this._nodes = new Object[this._capacity];
     }
 
+	public T peek() {
+		if (1 <= _last) return (T)_nodes[1];
+		else return null;
+	}
+
     public void push(T argument) {
         if (_capacity <= _last + 1) {
             resize();
@@ -67,8 +72,8 @@ class Heap<T> {
         _capacity = capacity;
     }
 
-    public int getSize() {
-        return this._capacity;
+    public int size() {
+        return this._last;
     }
 
     static class UpComparator implements Comparator<Integer> {
