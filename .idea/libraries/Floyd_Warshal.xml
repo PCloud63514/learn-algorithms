@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Floyd-Warshal">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/알고리즘 모음/최단거리 계산/Floyd-Warshal.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
