@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/DFS-BFS" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/네이버웹툰" isTestSource="false" packagePrefix="com.pcloud.jcodetest" />
+      <sourceFolder url="file://$MODULE_DIR$/위클리챌린지" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/코테 연습 모든 문제" isTestSource="false" packagePrefix="com.pcloud.jcodetest" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

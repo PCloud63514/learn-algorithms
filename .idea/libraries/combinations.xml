@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="combinations">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/알고리즘 모음/순열/combinations.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

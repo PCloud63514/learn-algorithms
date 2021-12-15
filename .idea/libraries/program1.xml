@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="program1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/알고리즘 모음/정렬/program.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
