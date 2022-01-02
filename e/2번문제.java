@@ -17,6 +17,7 @@ class Solution {
             // 돌탑 수 만큼 for문을 돈다
             int count = 0;
             for (int i = 0; i < poll.stones.length; i++) {
+                // 내부 로직만 합치면 타임아웃 피할듯?
                 boolean isFail = false;
                 int[] pollStonesClone = poll.stones.clone();
                 for (int y = 0; y < stones.length; y++) {
