@@ -10,12 +10,16 @@ class Solution {
         val q = numberSets.toList()
 
         for (i in q.indices) {
+            var b = true
             for (j in 2..q[i] / 2) {
                 if (q[i] % j == 0) {
+                    b = false
                     break
                 }
             }
-            answer++
+            if (b) {
+                answer++
+            }
         }
 
         return answer
@@ -39,5 +43,5 @@ fun dfs(numbers: IntArray, checks: BooleanArray, value: Int) {
 }
 
 fun main() {
-    Solution().solution("17")
+    Solution().solution("011")
 }
