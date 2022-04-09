@@ -14,5 +14,3 @@ x = np.array([[2,2],[2,2]])
 print(fillList)
 print(x * fillList)
 
-
-# print(np.dot(np.array([1]), fillList))
