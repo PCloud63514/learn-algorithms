@@ -1,5 +1,9 @@
 import java.util.*;
 
+/**
+ * 알고리즘: 투 포인터
+ * link:
+ */
 class Solution {
     public int[] solution(String[] gems) {
         int[] answer = new int[] { 0, gems.length - 1 };

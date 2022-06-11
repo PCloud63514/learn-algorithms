@@ -3,24 +3,22 @@
  * link: https://programmers.co.kr/learn/courses/30/lessons/42895?language=java
  */
 class Solution {
-    int[] list = new int[100000000];
+    int answer = 9;
     public int solution(int N, int number) {
-        dfs(N, N, 1, number);
-        return list[number] <= 8 ? list[number] : -1;
+        dfs(N, number, 0, 0);
+        return answer <= 8 ? answer : -1;
     }
 
-    void dfs(int N, int X, int count, int number) {
-        if (X < 0 || 8 < count) { return; }
-        list[X] = count;
-        if (0 < list[number]) { return; }
-
+    void dfs(int N, int number, long X, int count) {
+        if (8 < count) return;
+        if (X == number && count < answer) { answer = count; }
         int Y = N;
-        dfs(N, X + Y, count + list[Y], number);
-        dfs(N, X - Y, count + list[Y], number);
-        dfs(N, X * Y, count + list[Y], number);
-        dfs(N, X / Y, count + list[Y], number);
-
-        list[(Y * 10) + N] = list[Y] + 1;
-        Y = (Y * 10) + N;
+        for (int i = 1; i < 9 - count; i++) {
+            dfs(N, number, X + Y, count + i);
+            dfs(N, number, X - Y, count + i);
+            dfs(N, number, X * Y, count + i);
+            dfs(N, number, X / Y, count + i);
+            Y = (Y * 10) + N;
+        }
     }
 }
