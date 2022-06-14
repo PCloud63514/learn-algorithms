@@ -30,7 +30,6 @@ class Solution {
     void dfs(int depth, boolean[] check, String picture) {
         if (8 <= depth) {
             boolean bo = true;
-            for (int i = 0; i < friendA.length; i++) {
                 if (!bo) break;
                 int a = picture.indexOf(friendA[i]);
                 int b = picture.indexOf(friendB[i]);
