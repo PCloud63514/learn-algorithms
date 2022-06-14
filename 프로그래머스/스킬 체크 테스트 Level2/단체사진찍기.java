@@ -1,3 +1,7 @@
+/**
+ * 알고리즘: DFS
+ * link:
+ */
 class Solution {
     int answer = 0;
     String[] friends = new String[] { "A", "C", "F", "J", "M", "N", "R", "T" };

@@ -1,5 +1,9 @@
 import java.util.*;
 
+/**
+ * 알고리즘: 집합
+ * link:
+ */
 class Solution {
     public int solution(String str1, String str2) {
         String lowStr1 = str1.toLowerCase();
