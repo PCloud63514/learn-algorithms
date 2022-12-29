@@ -1,4 +1,5 @@
 import java.util.*;
+
 class Solution {
     // 1 2 3 1
     public static final int BREAD = 1;
@@ -23,6 +24,26 @@ class Solution {
                     answer++;
                 }
             }
+        }
+
+        return answer;
+    }
+
+    public int solution2(int[] ingredient) {
+        int answer = 0;
+
+        int[] stack = new int[ingredient.length];
+        int cursor = 0;
+
+        for (int i : ingredient) {
+            stack[cursor++] = i;
+            if (4 > cursor) continue;
+            if (stack[cursor - 1] != BREAD) continue;
+            if (stack[cursor - 2] != MEAT) continue;
+            if (stack[cursor - 3] != VEGETABLE) continue;
+            if (stack[cursor - 4] != BREAD) continue;
+            cursor = cursor - 4;
+            answer = answer + 1;
         }
 
         return answer;
