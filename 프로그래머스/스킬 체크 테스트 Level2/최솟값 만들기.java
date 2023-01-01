@@ -13,6 +13,8 @@ class Solution
             answer += A[i] * B[endPoint - i];
         }
 
+
+
         return answer;
     }
 }
