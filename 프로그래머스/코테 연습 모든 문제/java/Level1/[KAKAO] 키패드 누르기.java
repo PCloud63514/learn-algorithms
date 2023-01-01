@@ -1,3 +1,6 @@
+/**
+ * https://school.programmers.co.kr/learn/courses/30/lessons/67256
+ */
 class Solution {
     public String solution(int[] numbers, String hand) {
         String answer = "";
